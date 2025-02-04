@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "../../styles/contactList.css";
+import { Link } from 'react-router-dom';
 
 
 export const ContactList = () => {
@@ -48,7 +49,7 @@ export const ContactList = () => {
     }
   };
 
-  
+
   const handleDeleteContact = (contactId) => {
     fetch(`https://playground.4geeks.com/contact/agendas/alexbv/contacts/${contactId}`, {
       method: 'DELETE',
@@ -66,19 +67,19 @@ export const ContactList = () => {
 
   return (
     <div>
-      
-      <div className="contact-list">
+
+      <div className="container">
+        <Link to="/addContact" className='btn btn-success'> add contact </Link>
+        <h1>Contacts Alexbv</h1>
         {contacts.map((contact) => (
-          <div className="contact-card" key={contact.id}>
+          <li className="contact-card" key={contact.id}>
             <h3>{contact.name}</h3>
             <p>Email: {contact.email}</p>
             <p>Phone: {contact.phone}</p>
-            <p>Address: {contact.adress}</p>
-            <div>
-              <button onClick={() => handleUpdateContact(contact.id)}>Update</button>
-              <button onClick={() => handleDeleteContact(contact.id)}>Delete</button>
-            </div>
-          </div>
+            <p>Adress: {contact.address}</p>
+            {/* <Link onClick={() => handleUpdateContact(contact.id)} className='btn btn-success'><i className="fas fa-edit"></i></Link> */}
+            <Link onClick={() => handleDeleteContact(contact.id)} className='btn btn-success'><i className="fas fa-trash"></i></Link>
+          </li>
         ))}
       </div>
     </div>
