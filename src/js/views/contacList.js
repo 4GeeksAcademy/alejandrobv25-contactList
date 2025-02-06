@@ -77,8 +77,7 @@ export const ContactList = () => {
             <p>Email: {contact.email}</p>
             <p>Phone: {contact.phone}</p>
             <p>Adress: {contact.address}</p>
-            {/* <Link onClick={() => handleUpdateContact(contact.id)} className='btn btn-success'><i className="fas fa-edit"></i></Link> */}
-            <Link onClick={() => handleDeleteContact(contact.id)} className='btn btn-success'><i className="fas fa-trash"></i></Link>
+            <Link onClick={() => handleDeleteContact(contact.id)} className='delete-icon'><i className="fas fa-trash"></i></Link>
           </li>
         ))}
       </div>

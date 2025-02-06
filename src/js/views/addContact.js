@@ -73,7 +73,7 @@ export const AddContact = ({ addContactToList }) => {
           />
         </div>
         <div>
-          <label className="form-label">address</label>
+          <label className="form-label">Address</label>
           <input
             type="text"
             className="form-control"

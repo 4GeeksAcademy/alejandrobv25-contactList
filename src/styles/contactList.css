@@ -1,45 +1,99 @@
-/* Centrar el contenido en la pantalla */
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Tomar toda la altura de la ventana */
-  margin: 0;
-  background-color: #f0f0f0;
-}
 
-/* Contenedor principal */
 .container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 800px; /* Máximo ancho de 800px */
+  background-color: #f7f7f7;
+  padding: 40px;
+  border-radius: 10px;
+  margin-top: 40px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Título centrado */
 h1 {
+  font-size: 3rem;
   text-align: center;
   color: #333;
+  margin-bottom: 25px;
+  font-weight: 600;
 }
 
-/* Estilo de las tarjetas de contacto */
 .contact-card {
-  background-color: #fff;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
 
+.contact-card h3 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
 
+.contact-card p {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 8px 0;
+}
 
-/* Enlace centrado */
-a {
+button {
+  font-size: 1.1rem;
+  color: white;
+  background-color: #ff6347;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff2e00;
+}
+
+li {
+  list-style: none;
+}
+
+.link-add-contact {
   display: block;
   text-align: center;
-  margin-top: 15px;
-  color: #007bff;
+  margin: 30px 0;
+  padding: 12px;
+  font-size: 1.3rem;
+  color: #28a745;
+  background-color: #ffffff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.link-add-contact:hover {
+  text-decoration: underline;
+  background-color: #f1f1f1;
+  color: #218838;
+}
+
+/* Estilo del ícono de eliminar */
+.delete-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #ff6347;
+  transition: color 0.3s ease;
+}
+
+.delete-icon:hover {
+  color: #ff2e00;
 }
