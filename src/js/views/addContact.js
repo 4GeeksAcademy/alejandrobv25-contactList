@@ -1,40 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext"; 
 import "../../styles/addContact.css";
 
-
-export const AddContact = ({ addContactToList }) => {
+export const AddContact = () => {
+  const { store, actions } = useContext(Context); 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
-
   const handleSubmit = (e) => {
-
     e.preventDefault();
-    fetch('https://playground.4geeks.com/contact/agendas/alexbv/contacts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        phone,
-        email,
-        address
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("New Contact:", data);
-        addContactToList(data);
-        setIsSubmitted(true);
-      })
-      .catch((error) => {
-        console.error("Error al guardar el contacto:", error);
-      });
+    actions.createContact(name, phone, email, address); 
+    setName("");
+    setPhone("");
+    setEmail("");
+    setAddress("");
   };
+
   return (
     <div className="container-fluid">
       <h1>Add Contact</h1>

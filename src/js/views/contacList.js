@@ -1,85 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import "../../styles/contactList.css";
+import { Context } from '../store/appContext';
 import { Link } from 'react-router-dom';
-
+import "../../styles/contactList.css";
 
 export const ContactList = () => {
-  const [agenda, setAgenda] = useState([null]);
-  const [contacts, setContacts] = useState([]);
-
-
-  useEffect(() => {
-    fetch('https://playground.4geeks.com/contact/agendas/alexbv', {
-      method: 'POST',
-      body: JSON.stringify({ name: "alexbv" }),
-      headers: { 'content-type': 'application/json' }
-    })
-      .then((response) => response.json())
-      .then((agendaData) => setAgenda(agendaData));
-  }, []);
-
+  const { store, actions } = React.useContext(Context);
+  const [contacts, setContacts] = useState(store.contacts);
 
   useEffect(() => {
-    fetch('https://playground.4geeks.com/contact/agendas/alexbv', {
-      method: 'GET',
-      headers: { 'content-type': 'application/json' }
-    })
-      .then((response) => response.json())
-      .then((respJson) => setContacts(respJson.contacts));
-  }, [agenda]);
-
-
-  const handleUpdateContact = (contactId) => {
-    const contactToUpdate = contacts.find(contact => contact.id === contactId);
-    if (contactToUpdate) {
-      fetch(`https://playground.4geeks.com/contact/agendas/alexbv/contacts/${contactId}`, {
-        method: 'PUT',
-        body: JSON.stringify(contactToUpdate),
-        headers: { 'content-type': 'application/json' }
-      })
-        .then((response) => response.json())
-        .then((updatedContact) => {
-          setContacts((prevContacts) =>
-            prevContacts.map((contact) =>
-              contact.id === contactId ? updatedContact : contact
-            )
-          );
-        })
-        .catch((error) => console.error('Error updating contact:', error));
+    if (!store.agenda) {
+      actions.loadAgenda();
     }
-  };
+  }, [actions, store.agenda]);
 
+  useEffect(() => {
+    if (store.agenda && store.contacts.length === 0) {
+      actions.loadContacts();
+    }
+  }, [actions, store.agenda, store.contacts.length]);
 
-  const handleDeleteContact = (contactId) => {
-    fetch(`https://playground.4geeks.com/contact/agendas/alexbv/contacts/${contactId}`, {
-      method: 'DELETE',
-      headers: { 'content-type': 'application/json' }
-    })
-      .then((response) => {
-        if (response.ok) {
-          setContacts(contacts.filter(contact => contact.id !== contactId));
-        } else {
-          console.error('Error deleting contact');
-        }
-      })
-      .catch((error) => console.error('Error deleting contact:', error));
-  };
+  useEffect(() => {
+    setContacts(store.contacts);
+  }, [store.contacts]);
 
   return (
     <div>
-
       <div className="container">
-        <Link to="/addContact" className='btn btn-success'> add contact </Link>
+        <Link to="/addContact" className="btn btn-success">Add Contact</Link>
         <h1>Contacts Alexbv</h1>
-        {contacts.map((contact) => (
-          <li className="contact-card" key={contact.id}>
-            <h3>{contact.name}</h3>
-            <p>Email: {contact.email}</p>
-            <p>Phone: {contact.phone}</p>
-            <p>Adress: {contact.address}</p>
-            <Link onClick={() => handleDeleteContact(contact.id)} className='delete-icon'><i className="fas fa-trash"></i></Link>
-          </li>
-        ))}
+        {
+          contacts && contacts.length > 0 ? (
+            contacts.map((contact) => (
+              <li className="contact-card" key={contact.id}>
+                <h3>{contact.name}</h3>
+                <p>Email: {contact.email}</p>
+                <p>Phone: {contact.phone}</p>
+                <p>Address: {contact.address}</p>
+                <Link onClick={() => actions.deleteContact(contact.id)} className="delete-icon">
+                  <i className="fas fa-trash"></i>
+                </Link>
+              </li>
+            ))
+          ) : (
+            <p>No contacts available</p>
+          )
+        }
       </div>
     </div>
   );
